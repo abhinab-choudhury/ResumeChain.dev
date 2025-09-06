@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";
 import { and, eq, desc } from "drizzle-orm";
 import { resume } from "@/lib/db/schema";
+import { auth } from "@/lib/auth";
 
 /**
  * POST /api/resume/add
@@ -10,11 +11,14 @@ import { resume } from "@/lib/db/schema";
  */
 export async function POST(req: NextRequest) {
   try {
-    const body = await req.json();
-    const { userId, title, content, resumeGroupId } = body;
+    const session = await auth.api.getSession({ headers: req.headers });
+    if (!session) return new Response("Unauthorized", { status: 401 });
 
-    if (!userId || !title || !content) {
-      console.log("userId, title or content filed/s is/are missing");
+    const body = await req.json();
+    const { title, content, resumeGroupId } = body;
+
+    if (!title || !content) {
+      console.log("title or content filed/s is/are missing");
       return NextResponse.json(
         { error: "Missing required field" },
         { status: 400 },
@@ -30,14 +34,14 @@ export async function POST(req: NextRequest) {
         .set({ isLatest: false })
         .where(
           and(
-            eq(resume.userId, userId),
+            eq(resume.userId, session.user.id),
             eq(resume.resumeGroupId, resumeGroupId),
           ),
         );
 
       const latest = await db.query.resume.findFirst({
         where: and(
-          eq(resume.userId, userId),
+          eq(resume.userId, session.user.id),
           eq(resume.resumeGroupId, resumeGroupId),
         ),
         orderBy: desc(resume.version),
@@ -51,7 +55,7 @@ export async function POST(req: NextRequest) {
       .insert(resume)
       .values({
         id: crypto.randomUUID(),
-        userId,
+        userId: session.user.id,
         title,
         content,
         resumeGroupId: groupId,

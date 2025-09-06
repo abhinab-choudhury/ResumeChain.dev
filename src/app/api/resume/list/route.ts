@@ -1,3 +1,4 @@
+import { auth } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { resume, user } from "@/lib/db/schema";
 import { desc, eq } from "drizzle-orm";
@@ -10,19 +11,11 @@ import { useId } from "react";
  */
 export default async function GET(req: NextRequest) {
   try {
-    const body = await req.json();
-    const { userId } = body;
-
-    if (!useId) {
-      console.log("userId field is missing");
-      return NextResponse.json(
-        { message: "Missing required field" },
-        { status: 400 },
-      );
-    }
+    const session = await auth.api.getSession({ headers: req.headers });
+    if (!session) return new Response("Unauthorized", { status: 401 });
 
     const userResume = await db.query.resume.findMany({
-      where: eq(resume.userId, userId),
+      where: eq(resume.userId, session.user.id),
       orderBy: desc(resume.createdAt),
     });
 

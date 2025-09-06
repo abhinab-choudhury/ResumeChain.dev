@@ -62,6 +62,7 @@ export const web3Credential = pgTable("web3Credentials", {
   userId: text("user_id")
     .notNull()
     .references(() => user.id, { onDelete: "cascade" }),
+  nonce: text("nonce"),
   walletAddress: text("wallet_address"),
   walletVerified: boolean("wallet_verified").default(false),
 });
