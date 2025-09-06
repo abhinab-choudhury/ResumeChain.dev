@@ -38,6 +38,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useWalletAuth } from "@/hooks/useWalletAuth";
 
 export interface IUploads {
   id: number;
@@ -49,11 +50,10 @@ export interface IUploads {
 export default async function DashboardPage() {
   const user = await getUser();
   const {
-    authenticate: web3Authenticate,
-    isAuthenticating: web3IsAuthenticating,
-    user: web3User,
-    isAuthenticated: web3isAutenticated,
-  } = useMoralis();
+    wallet: web3Authenticate,
+    isLoading: web3IsAuthenticating,
+    error: web3Error,
+  } = useWalletAuth();
   const uploads: IUploads[] = [
     {
       id: 1,
@@ -113,7 +113,7 @@ export default async function DashboardPage() {
                   <Button className="px-6">Upload File</Button>
                 </DialogTrigger>
                 <DialogContent className="sm:max-w-md">
-                  {web3isAutenticated ? (
+                  {web3Authenticate ? (
                     <>
                       <DialogHeader>
                         <DialogTitle className="text-xl font-semibold">
@@ -130,8 +130,8 @@ export default async function DashboardPage() {
                           <Wallet className="w-4 h-4" />
                           {web3IsAuthenticating
                             ? "Connecting..."
-                            : web3User
-                              ? "Reconnect Wallet"
+                            : web3Authenticate
+                              ? "Wallet Connected Successfully"
                               : "Connect MetaMask"}
                         </Button>
                       </DialogHeader>
