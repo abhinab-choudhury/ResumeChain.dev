@@ -1,8 +1,8 @@
-# Titan
-
+# ResumeChain.dev
+> Template: [rudrodip/titan](https://github.com/rudrodip/titan)
 Next.js 15 fullstack template with better-auth for authentication and drizzle-orm as the ORM.
 
-![Titan](./public/og.png)
+![ResumeChain.dev](./public/og.png)
 
 > [!WARNING]
 > This project uses Next.js 15-canary to support node runtime on middleware. This is not yet supported in stable version.
