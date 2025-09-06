@@ -9,6 +9,7 @@ import { cn } from "@/lib/utils";
 import { PanelsTopLeft, Shield, Database, Server, Component, Code, ArrowRight, Sparkle, Github, Copy, Check, ArrowUpRight } from "lucide-react";
 import Link from "next/link";
 import { useSession } from "@/lib/auth-client";
+import Image from "next/image";
 
 export default function Home() {
   const [copied, setCopied] = useState(false);
@@ -27,7 +28,7 @@ export default function Home() {
       <div className="w-full max-w-7xl mx-auto border border-dashed flex flex-col my-2">
         <div className="w-full flex justify-between divide-x">
           <div className="relative hidden md:flex w-1/3 aspect-square bg-black items-center justify-center group/titan border-dashed">
-            <Goku />
+            <Image height={400} width={400} src="/logo.png" alt={siteConfig.name} />
             <div className="absolute top-0 left-0 size-4 border-t-2 border-l-2 border-foreground opacity-0 group-hover/titan:opacity-100 transition-all duration-200"></div>
             <div className="absolute top-0 right-0 size-4 border-t-2 border-r-2 border-foreground opacity-0 group-hover/titan:opacity-100 transition-all duration-200"></div>
             <div className="absolute bottom-0 left-0 size-4 border-b-2 border-l-2 border-foreground opacity-0 group-hover/titan:opacity-100 transition-all duration-200"></div>
@@ -63,7 +64,7 @@ export default function Home() {
               <ThemeToggler className="border-dashed size-10 md:size-14" />
             </div>
             <div id="hero" className="flex flex-col p-4">
-              <h1 className="head-text-md">Titan</h1>
+              <h1 className="head-text-md">{siteConfig.name}</h1>
               <p className="text-muted-foreground max-w-3xl">{siteConfig.description}</p>
             </div>
             <div id="code" className="flex flex-col p-4">

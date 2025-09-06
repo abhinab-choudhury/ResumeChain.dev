@@ -4,6 +4,9 @@ import "@/styles/globals.css";
 import { siteConfig } from "@/config/site.config";
 import { cn } from "@/lib/utils";
 import RootProviders from "@/components/providers";
+import { NextSSRPlugin } from "@uploadthing/react/next-ssr-plugin";
+import { extractRouterConfig } from "uploadthing/server";
+import { ourFileRouter } from "@/app/api/uploadthing/core";
 
 const fontSans = Manrope({
   variable: "--font-sans",
@@ -27,8 +30,8 @@ export const metadata: Metadata = {
   keywords: siteConfig.keywords,
   creator: siteConfig.name,
   icons: {
-    icon: "/goku.svg",
-    shortcut: "/goku.svg",
+    icon: "/logo.png",
+    shortcut: "/logo.png",
   },
   openGraph: {
     title: siteConfig.title,
@@ -77,6 +80,15 @@ export default function RootLayout({
         )}
       >
         <RootProviders>
+          <NextSSRPlugin
+            /**
+             * The `extractRouterConfig` will extract **only** the route configs
+             * from the router to prevent additional information from being
+             * leaked to the client. The data passed to the client is the same
+             * as if you were to fetch `/api/uploadthing` directly.
+             */
+            routerConfig={extractRouterConfig(ourFileRouter)}
+          />
           {children}
         </RootProviders>
       </body>

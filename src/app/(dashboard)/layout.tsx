@@ -2,7 +2,7 @@ import ThemeToggler from "@/components/theme/toggler";
 import { Button } from "@/components/ui/button";
 import { UserProfile } from "@/components/user-profile";
 import { siteConfig } from "@/config/site.config";
-import { ArrowUpRight, BarChart2, CreditCard, Layout, Settings, Users } from "lucide-react";
+import { ArrowUpRight, BarChart2, CreditCard, Layout, Search, Settings, Users } from "lucide-react";
 import Link from "next/link";
 
 export default function DashboardLayout({
@@ -69,7 +69,13 @@ const MockSidebar = () => {
             <span>Dashboard</span>
           </Link>
         </Button>
-        <Button variant="ghost" className="border-dashed h-14 text-left justify-start pl-8 opacity-50 cursor-not-allowed" disabled asChild>
+        <Button variant="ghost" className="border-dashed h-14 text-left justify-start pl-8" asChild>
+          <Link href="/search">
+            <Search />
+            <span>Search</span>
+          </Link>
+        </Button>
+        <Button variant="ghost" className="border-dashed h-14 text-left justify-start pl-8" asChild>
           <Link href="/settings">
             <Settings />
             <span>Settings</span>
