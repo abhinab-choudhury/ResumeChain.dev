@@ -1,5 +1,3 @@
-import { getUser } from "@/lib/auth-utils";
-import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -8,38 +6,16 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import {
-  Download,
-  FileText,
-  Github,
-  Plus,
-  StampIcon,
-  Trash2Icon,
-  Upload,
-  Wallet,
-} from "lucide-react";
-import { BarChart, EllipsisIcon, Eye, Trash2 } from "lucide-react";
 import { siteConfig } from "@/config/site.config";
 import Link from "next/link";
 import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import UploadFiles from "@/components/upload-file";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { useWallet } from "@/hooks/useWalletAuth";
-import WalletConnect from "@/components/connect-wallet";
-import UploadResumeForm from "@/components/upload-resume-form";
+  UploadResumeButton,
+  UploadResumeForm,
+} from "@/components/upload-resume";
+import { UploadedResume } from "@/components/app-card";
+import { getUser } from "@/lib/auth-utils";
+import { WalletConnect } from "@/components/connect-wallet";
+import { FileText } from "lucide-react";
 
 export interface IUploads {
   id: number;
@@ -118,32 +94,6 @@ export default async function DashboardPage() {
       </Card>
     </div>
   ) : (
-    <RecentUploadsCard uploads={uploads} />
-  );
-}
-
-function ResumeCard({ file }: { file: IUploads }) {
-  return (
-    <Card className="aspect-square flex flex-col items-center justify-between p-4 border bg-muted/40 hover:shadow-md transition rounded-lg relative">
-      <CardDropdown />
-      <div className="flex flex-col items-center text-center flex-1 justify-center">
-        <FileText className="w-10 h-10 text-primary mb-2" />
-        <p className="font-medium text-sm truncate w-full">{file.name}</p>
-        <p className="text-xs text-muted-foreground mt-1">{file.uploadedAt}</p>
-      </div>
-      <div className="flex">
-        <Button variant="outline" size="sm" asChild className="w-auto">
-          <Link href={file.url} download>
-            Details
-          </Link>
-        </Button>
-      </div>
-    </Card>
-  );
-}
-
-export function RecentUploadsCard({ uploads }: { uploads: IUploads[] }) {
-  return (
     <Card className="w-full h-full shadow-lg border-muted/20 bg-card/60 backdrop-blur-sm rounded-lg">
       <CardHeader className="flex flex-row items-center justify-between">
         <div>
@@ -155,94 +105,11 @@ export function RecentUploadsCard({ uploads }: { uploads: IUploads[] }) {
             Manage and download your uploaded documents
           </CardDescription>
         </div>
-        <Dialog>
-          <DialogTrigger asChild>
-            <Button size="sm" className="gap-2">
-              <Plus className="w-4 h-4" /> Upload
-            </Button>
-          </DialogTrigger>
-          <DialogContent className="sm:max-w-md">
-            <DialogHeader>
-              <DialogTitle>Upload your file</DialogTitle>
-              <DialogDescription>
-                Choose a file and upload it securely. Max file size 16MB.
-              </DialogDescription>
-            </DialogHeader>
-            <div className="mt-4 space-y-4">
-              <div className="flex flex-col gap-2">
-                <label
-                  htmlFor="jobTitle"
-                  className="text-sm font-medium text-muted-foreground"
-                >
-                  Job Title <span className="text-red-500">*</span>
-                </label>
-                <Input
-                  id="jobTitle"
-                  type="text"
-                  placeholder="e.g. Software Engineer Resume"
-                />
-              </div>
-
-              <div className="flex flex-col gap-2">
-                <label className="text-sm font-medium text-muted-foreground">
-                  Upload File <span className="text-red-500">*</span>
-                </label>
-                <UploadFiles />
-              </div>
-
-              <div className="flex justify-end gap-2">
-                <Button variant="outline">Cancel</Button>
-                <Button type="submit" className="gap-2">
-                  <Upload className="w-4 h-4" /> Upload
-                </Button>
-              </div>
-            </div>
-          </DialogContent>
-        </Dialog>
+        <UploadResumeButton />
       </CardHeader>
-
       <CardContent>
-        {uploads.length > 0 ? (
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
-            {uploads.map((file) => (
-              <ResumeCard key={file.id} file={file} />
-            ))}
-          </div>
-        ) : (
-          <p className="text-sm text-muted-foreground italic text-center">
-            No files uploaded yet.
-          </p>
-        )}
+        <UploadedResume uploads={uploads} />
       </CardContent>
     </Card>
-  );
-}
-
-function CardDropdown() {
-  return (
-    <div className="absolute top-1 right-1">
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Button
-            size="icon"
-            variant="ghost"
-            className="rounded-full shadow-none rotate-90"
-            aria-label="Open edit menu"
-          >
-            <EllipsisIcon size={16} aria-hidden="true" />
-          </Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent align="start" className="w-fit">
-          <DropdownMenuItem asChild>
-            <Link href={""} target="_blank">
-              <Eye className="w-4 h-4 mr-2" /> View Doc
-            </Link>
-          </DropdownMenuItem>
-          <DropdownMenuItem>
-            <BarChart className="w-4 h-4 mr-2" /> Analyze
-          </DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
-    </div>
   );
 }

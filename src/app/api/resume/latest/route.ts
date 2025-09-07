@@ -8,7 +8,7 @@ import { NextRequest, NextResponse } from "next/server";
  * GET /api/resume/latest
  * Returns the latest resume (useful if user only has one active resume).
  */
-export default async function GET(req: NextRequest) {
+export async function GET(req: NextRequest) {
   try {
     const session = await auth.api.getSession({ headers: req.headers });
     if (!session) return new Response("Unauthorized", { status: 401 });

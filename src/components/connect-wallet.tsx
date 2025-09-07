@@ -11,7 +11,7 @@ import {
 import { Button } from "./ui/button";
 import { Wallet } from "lucide-react";
 
-export default function WalletConnect() {
+export function WalletConnect() {
   const connectWallet = async () => {};
   return (
     <Dialog>

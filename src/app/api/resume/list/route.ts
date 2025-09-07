@@ -3,13 +3,12 @@ import { db } from "@/lib/db";
 import { resume, user } from "@/lib/db/schema";
 import { desc, eq } from "drizzle-orm";
 import { NextRequest, NextResponse } from "next/server";
-import { useId } from "react";
 
 /**
  * GET /api/resume/list
  * Returns all latest resumes for the logged-in user.
  */
-export default async function GET(req: NextRequest) {
+export async function GET(req: NextRequest) {
   try {
     const session = await auth.api.getSession({ headers: req.headers });
     if (!session) return new Response("Unauthorized", { status: 401 });
