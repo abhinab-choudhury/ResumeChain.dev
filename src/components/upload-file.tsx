@@ -1,26 +1,17 @@
-"use client"
-
-import { AlertCircleIcon, PaperclipIcon, UploadIcon, XIcon } from "lucide-react"
+"use client";
 
 import {
-  formatBytes,
-  useFileUpload,
-} from "@/hooks/use-file-upload"
-import { Button } from "@/components/ui/button"
+  AlertCircleIcon,
+  PaperclipIcon,
+  UploadIcon,
+  XIcon,
+} from "lucide-react";
 
-// Create some dummy initial files
-const initialFiles = [
-  {
-    name: "document.pdf",
-    size: 1528737,
-    type: "application/pdf",
-    url: "https://picsum.photos/1000/800?grayscale&random=1",
-    id: "document.pdf-1744638436563-8u5xuls",
-  },
-]
+import { formatBytes, useFileUpload } from "@/hooks/use-file-upload";
+import { Button } from "@/components/ui/button";
 
 export default function UploadFiles() {
-  const maxSize = 10 * 1024 * 1024 // 10MB default
+  const maxSize = 10 * 1024 * 1024; // 10MB default
 
   const [
     { files, isDragging, errors },
@@ -35,10 +26,9 @@ export default function UploadFiles() {
     },
   ] = useFileUpload({
     maxSize,
-    initialFiles,
-  })
+  });
 
-  const file = files[0]
+  const file = files[0];
 
   return (
     <div className="flex flex-col gap-2">
@@ -124,5 +114,5 @@ export default function UploadFiles() {
         Accepted formats: PDF, DOCX
       </p>
     </div>
-  )
+  );
 }

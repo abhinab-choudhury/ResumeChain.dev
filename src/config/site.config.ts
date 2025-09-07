@@ -5,8 +5,8 @@ export const siteConfig: SiteConfig = {
   title:
     "ResumeChain.dev - Tamper-proof AI Resume Analysis with Blockchain Validation",
   description:
-    "Titan leverages AI to validate resumes and Blockchain to make them tamper-proof, ensuring recruiters can identify genuine talent with trust and ease.",
-  origin: "https://titan.rdsx.dev",
+    "ResumeChain.dev leverages AI to validate resumes and Blockchain to make them tamper-proof, ensuring recruiters can identify genuine talent with trust and ease.",
+  origin: "https://resume-chain-khaki.vercel.app",
   keywords: [
     "AI Resume Analysis",
     "Blockchain Resume Validation",

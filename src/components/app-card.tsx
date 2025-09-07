@@ -37,10 +37,10 @@ import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import UploadFiles from "./upload-file";
 import Link from "next/link";
-import { IUploads } from "@/app/(dashboard)/dashboard/page";
 import { cn } from "@/lib/utils";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Badge } from "./ui/badge";
+import { Resume } from "@/lib/db/schema";
 
 export type ProfileCardProps = {
   // Candidate Info
@@ -73,11 +73,11 @@ export type ProfileCardProps = {
 };
 
 export type UploadedResumeProps = {
-  uploads: IUploads[];
+  uploads: Resume[];
 };
 
 export type ResumeCardProps = {
-  file: IUploads;
+  file: Resume;
 };
 
 export function UploadedResume({ uploads }: UploadedResumeProps) {
@@ -115,7 +115,7 @@ function ResumeCard({ file }: ResumeCardProps) {
           </DropdownMenuTrigger>
           <DropdownMenuContent align="start" className="w-fit">
             <DropdownMenuItem asChild>
-              <Link href={""} target="_blank">
+              <Link href={file.content} target="_blank">
                 <Eye className="w-4 h-4 mr-2" /> View Doc
               </Link>
             </DropdownMenuItem>
@@ -127,12 +127,14 @@ function ResumeCard({ file }: ResumeCardProps) {
       </div>
       <div className="flex flex-col items-center text-center flex-1 justify-center">
         <FileText className="w-10 h-10 text-primary mb-2" />
-        <p className="font-medium text-sm truncate w-full">{file.name}</p>
-        <p className="text-xs text-muted-foreground mt-1">{file.uploadedAt}</p>
+        <p className="font-medium text-sm truncate w-full">{file.title}</p>
+        <p className="text-xs text-muted-foreground mt-1">
+          {new Date(file.createdAt).toISOString()}
+        </p>
       </div>
       <div className="flex">
         <Button variant="outline" size="sm" asChild className="w-auto">
-          <Link href={file.url} download>
+          <Link href={file.content} download>
             Details
           </Link>
         </Button>

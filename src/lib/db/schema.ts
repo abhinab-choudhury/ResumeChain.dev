@@ -61,7 +61,8 @@ export const web3Credential = pgTable("web3Credentials", {
   id: text("id").primaryKey(),
   userId: text("user_id")
     .notNull()
-    .references(() => user.id, { onDelete: "cascade" }),
+    .references(() => user.id, { onDelete: "cascade" })
+    .unique(),
   nonce: text("nonce"),
   walletAddress: text("wallet_address"),
   walletVerified: boolean("wallet_verified").default(false),
@@ -80,3 +81,6 @@ export const resume = pgTable("resumes", {
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
+
+export type Web3Credential = typeof web3Credential.$inferSelect;
+export type Resume = typeof resume.$inferSelect;

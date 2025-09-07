@@ -15,6 +15,13 @@
       "when": 1757208479160,
       "tag": "0001_unknown_phantom_reporter",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1757221097821,
+      "tag": "0002_windy_venus",
+      "breakpoints": true
     }
   ]
 }

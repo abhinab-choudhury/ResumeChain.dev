@@ -1,0 +1,1 @@
+ALTER TABLE "web3Credentials" ADD CONSTRAINT "web3Credentials_user_id_unique" UNIQUE("user_id");

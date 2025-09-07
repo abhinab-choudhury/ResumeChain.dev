@@ -32,7 +32,7 @@ export async function POST(req: Request) {
   return NextResponse.json(
     {
       success: true,
-      message: `Sign this message to verify: ${nonce}`,
+      message: `Sign this message to verify ${address}: ${nonce}`,
     },
     { status: 200 },
   );
