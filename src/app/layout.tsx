@@ -4,8 +4,6 @@ import "@/styles/globals.css";
 import { siteConfig } from "@/config/site.config";
 import { cn } from "@/lib/utils";
 import RootProviders from "@/components/providers";
-import { NextSSRPlugin } from "@uploadthing/react/next-ssr-plugin";
-import { extractRouterConfig } from "uploadthing/server";
 
 const fontSans = Manrope({
   variable: "--font-sans",
