@@ -1,7 +1,9 @@
-import { useState } from "react";
-import { ethers } from "ethers";
+"use client";
 
-export function useWalletAuth() {
+import { ethers } from "ethers";
+import { useState } from "react";
+
+export function useWallet() {
   const [wallet, setWallet] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);

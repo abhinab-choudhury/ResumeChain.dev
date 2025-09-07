@@ -2,7 +2,8 @@ import { SiteConfig } from "@/types";
 
 export const siteConfig: SiteConfig = {
   name: "ResumeChain.dev",
-  title: "ResumeChain.dev - Tamper-proof AI Resume Analysis with Blockchain Validation",
+  title:
+    "ResumeChain.dev - Tamper-proof AI Resume Analysis with Blockchain Validation",
   description:
     "Titan leverages AI to validate resumes and Blockchain to make them tamper-proof, ensuring recruiters can identify genuine talent with trust and ease.",
   origin: "https://titan.rdsx.dev",
@@ -19,8 +20,8 @@ export const siteConfig: SiteConfig = {
   ],
   og: "https://titan.rdsx.dev/og.png",
   creator: {
-    name: "Titan Team",
-    url: "https://titan.rdsx.dev",
+    name: "Abhinab Choudhury",
+    url: "https://portfolio-abhinab-choudhury.vercel.app",
   },
   socials: {
     github: "https://github.com/abhinab-choudhury/resume-chain",

@@ -21,7 +21,6 @@ import {
 import { BarChart, EllipsisIcon, Eye, Trash2 } from "lucide-react";
 import { siteConfig } from "@/config/site.config";
 import Link from "next/link";
-import { toast } from "sonner";
 import {
   Dialog,
   DialogContent,
@@ -38,7 +37,9 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useWalletAuth } from "@/hooks/useWalletAuth";
+import { useWallet } from "@/hooks/useWalletAuth";
+import WalletConnect from "@/components/connect-wallet";
+import UploadResumeForm from "@/components/upload-resume-form";
 
 export interface IUploads {
   id: number;
@@ -49,26 +50,19 @@ export interface IUploads {
 
 export default async function DashboardPage() {
   const user = await getUser();
-  const {
-    wallet: web3Authenticate,
-    isLoading: web3IsAuthenticating,
-    error: web3Error,
-  } = useWalletAuth();
   const uploads: IUploads[] = [
-    {
-      id: 1,
-      name: "Devops Engineer",
-      url: "/uploads/resume_v3.pdf",
-      uploadedAt: "2 days ago",
-    },
+    // {
+    //   id: 1,
+    //   name: "Devops Engineer",
+    //   url: "/uploads/resume_v3.pdf",
+    //   uploadedAt: "2 days ago",
+    // },
     // { id: 2, name: "cover_letter.docx", url: "/uploads/cover_letter.docx", uploadedAt: "5 days ago" },
     // { id: 3, name: "portfolio.pdf", url: "/uploads/portfolio.pdf", uploadedAt: "1 week ago" },
     // { id: 4, name: "resume_v2.pdf", url: "/uploads/resume_v2.pdf", uploadedAt: "2 weeks ago" },
     // { id: 5, name: "linkedin_export.pdf", url: "/uploads/linkedin.pdf", uploadedAt: "3 weeks ago" },
     // { id: 6, name: "reference_letter.docx", url: "/uploads/reference_letter.docx", uploadedAt: "1 month ago" },
   ];
-  const handleSubmit = async () => {};
-  const connectWallet = async () => {};
 
   return uploads.length === 0 ? (
     <div className="flex flex-col items-center justify-center w-full h-[calc(100vh-4rem)] px-4">
@@ -108,76 +102,7 @@ export default async function DashboardPage() {
               Upload a file to get started.
             </p>
             <div className="flex items-center justify-center gap-2">
-              <Dialog>
-                <DialogTrigger asChild>
-                  <Button className="px-6">Upload File</Button>
-                </DialogTrigger>
-                <DialogContent className="sm:max-w-md">
-                  {web3Authenticate ? (
-                    <>
-                      <DialogHeader>
-                        <DialogTitle className="text-xl font-semibold">
-                          Connect your Crypo Wallet
-                        </DialogTitle>
-                        <DialogDescription className="text-sm text-muted-foreground">
-                          Securely link your wallet to upload resumes on-chain.
-                        </DialogDescription>
-                        <Button
-                          onClick={connectWallet}
-                          disabled={web3IsAuthenticating}
-                          className="w-full flex items-center justify-center gap-2"
-                        >
-                          <Wallet className="w-4 h-4" />
-                          {web3IsAuthenticating
-                            ? "Connecting..."
-                            : web3Authenticate
-                              ? "Wallet Connected Successfully"
-                              : "Connect MetaMask"}
-                        </Button>
-                      </DialogHeader>
-                    </>
-                  ) : (
-                    <>
-                      <DialogHeader>
-                        <DialogTitle>Upload your file</DialogTitle>
-                        <DialogDescription>
-                          Choose a file and upload it securely. Max file size
-                          16MB.
-                        </DialogDescription>
-                      </DialogHeader>
-                      <form onSubmit={handleSubmit} className="mt-4 space-y-4">
-                        <div className="flex flex-col gap-2">
-                          <label
-                            htmlFor="jobTitle"
-                            className="text-sm font-medium text-muted-foreground"
-                          >
-                            Job Title <span className="text-red-500">*</span>
-                          </label>
-                          <Input
-                            id="jobTitle"
-                            type="text"
-                            placeholder="e.g. Software Engineer Resume"
-                          />
-                        </div>
-
-                        <div className="flex flex-col gap-2">
-                          <label className="text-sm font-medium text-muted-foreground">
-                            Upload File <span className="text-red-500">*</span>
-                          </label>
-                          <UploadFiles />
-                        </div>
-
-                        <div className="flex justify-end gap-2">
-                          <Button variant="outline">Cancel</Button>
-                          <Button type="submit" className="gap-2">
-                            <Upload className="w-4 h-4" /> Upload
-                          </Button>
-                        </div>
-                      </form>
-                    </>
-                  )}
-                </DialogContent>
-              </Dialog>
+              {false ? <WalletConnect /> : <UploadResumeForm />}
             </div>
           </div>
         </CardContent>
@@ -209,13 +134,7 @@ function ResumeCard({ file }: { file: IUploads }) {
       <div className="flex">
         <Button variant="outline" size="sm" asChild className="w-auto">
           <Link href={file.url} download>
-            <StampIcon className="w-4 h-4 mr-1" />
-            Mint
-          </Link>
-        </Button>
-        <Button variant="outline" size="sm" asChild className="w-fit">
-          <Link href={file.url} download>
-            <Trash2Icon className="w-4 h-4 mr-1" />
+            Details
           </Link>
         </Button>
       </div>
